@@ -1,0 +1,3 @@
+def run
+  true
+end

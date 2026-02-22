@@ -1,0 +1,6 @@
+repo_paths = ["/repo"]
+ignore_paths = [".git", "node_modules", "target"]
+model_path = "models/all-minilm-l6-v2.onnx"
+default_top_k = 20
+enable_metrics = true
+

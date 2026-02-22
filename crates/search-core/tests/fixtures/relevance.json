@@ -1,0 +1,17 @@
+[
+  {
+    "query": "iso_to_date",
+    "chunk_id": "date-1",
+    "file_path": "src/date.rs",
+    "symbol": "iso_to_date",
+    "content": "fn iso_to_date(input: &str) -> String { input.to_string() }"
+  },
+  {
+    "query": "save user",
+    "chunk_id": "repo-1",
+    "file_path": "src/repo.rs",
+    "symbol": "save_user",
+    "content": "fn save_user(name: &str) -> bool { !name.is_empty() }"
+  }
+]
+

@@ -1,0 +1,28 @@
+services:
+  mcp-server:
+    build: .
+    container_name: codivex-mcp-server
+    ports:
+      - "38080:38080"
+    volumes:
+      - ${REPO_PATH:-.}:/repo:ro
+      - ${MODEL_DIR:-./models}:/models:ro
+    depends_on:
+      - qdrant
+    environment:
+      - QDRANT_URL=${QDRANT_URL:-http://qdrant:6333}
+      - MODEL_PATH=${MODEL_PATH:-/models/embedding.onnx}
+      - MCP_BIND_ADDR=${MCP_BIND_ADDR:-0.0.0.0}
+      - MCP_ALLOW_NON_LOCAL=${MCP_ALLOW_NON_LOCAL:-true}
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: codivex-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+volumes:
+  qdrant_data:
