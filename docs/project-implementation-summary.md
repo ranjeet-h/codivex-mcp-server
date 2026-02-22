@@ -170,6 +170,57 @@ CLI docs:
 - Docker verification (`make verify-docker`) passes with default non-blocking model check.
 - Benchmark matrix, load test, and quality harness commands are available and executed.
 
+## 8.1 Performance Insights from Benchmark Tests
+
+### Load Test Results (300 API requests, 64 SSE streams, 20s timeout)
+
+| Metric | API | SSE Streams |
+|--------|-----|-------------|
+| Success Rate | 100% (300/300) | 100% (64/64) |
+| Throughput | 1,090 ops/sec | 295 ops/sec |
+| p50 Latency | 1.4 ms | 14.5 ms |
+| p95 Latency | 260 ms | 115 ms |
+| p99 Latency | 261 ms | 121 ms |
+| Max Latency | 261 ms | 121 ms |
+
+### Quality Metrics (MRR/Recall Evaluation)
+
+| Metric | Score |
+|--------|-------|
+| MRR@10 | 1.0 (perfect) |
+| Recall@5 | 1.0 (perfect) |
+| Hits@1 | 3/3 (100%) |
+| Hits@5 | 3/3 (100%) |
+
+### Indexing Performance
+
+| Profile | Files | Chunks | Est. LOC | Index Time |
+|---------|-------|--------|----------|------------|
+| Small project | 177 | 287 | ~50k | 653 ms |
+| Medium project | 200 | 3,556 | ~500k | ~650 ms (est.) |
+
+Benchmarks follow three profiles defined in `benchmarks/dataset-profiles.md`:
+- **Small**: ~50k LOC (5-10 repos/modules)
+- **Medium**: ~500k LOC (20-40 modules) 
+- **Large**: 1M+ LOC (monorepo-scale)
+
+### Query Latency
+
+| Query Type | Latency |
+|------------|---------|
+| Exact Symbol Lookup | 10 ms |
+| Full Hybrid Query | 50 ms |
+| SSE Stream Init | 482 ms |
+
+### Throughput Estimates
+
+- **Full hybrid query**: ~20 QPS (roughly 20 searches per second)
+- **API endpoint**: ~1,090 ops/sec (operations per second under heavy load)
+
+> **Quick glossary**: *QPS* = queries per second (how many search requests the system can handle). *p50/p95/p99* = response time percentiles (p50 = median, p95 = 95% of requests faster than this, p99 = 99% faster than this).
+
+All benchmark reports available in `benchmarks/` directory.
+
 ## 9. Documents and Operational Guides Added
 
 - `README.md` documentation index and run flows.
